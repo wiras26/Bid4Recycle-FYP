@@ -1,0 +1,34 @@
+<div id="directoryitem" v-cloak>
+
+  <div class="p-3 mb-2 bg-info text-white">
+    <h1>Directory item</h1>
+  </div>
+
+  <div class="container">
+    <div class="item-box mt-4" v-for="(item,index) in data">
+      <div class="row">
+        <div class="col-4">
+          <img :src=item.companyLogo.url alt="Item Image" height="300" width="300" style="padding: 25px 5px 5px 25px;">
+        </div>
+        <div class="col-8">
+          <div class="item-info">
+            <h4  style="margin-top: 1em;">{{item.name}}</h4>
+            <div class="d-flex align-items-left" v-if="item.address">
+              <img src="/images/location.svg" class="img-fluid" width="15px" style="margin-right:10px">
+              <label class="mb-0">{{item.address}}</label>
+            </div>
+            <div class="d-flex align-items-left pt-2">
+              <img src="/images/phone.svg" class="img-fluid" width="20px" style="margin-right:10px">
+              <label class="mb-0">{{item.number}}</label>
+            </div>
+            <p style="margin-top: 1em;">{{item.description}}</p>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

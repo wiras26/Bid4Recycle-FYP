@@ -1,0 +1,100 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous" defer></script>
+<link href="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/css/swiffy-slider.min.css" rel="stylesheet" crossorigin="anonymous">
+
+<div id="dashboard" v-cloak>
+
+  <div class="p-3 mb-2 bg-info text-white" style="background: linear-gradient(90deg, rgba(141,30,209,1) 0%, rgba(253,29,225,1) 37%, rgba(252,69,69,1) 100%)  !important">
+    <h1>DASHBOARD</h1>
+  </div>
+
+  <div class="container container-lg">
+
+    <div class="mt-5">
+     
+    </div>
+
+
+   <!-- Silder -->
+    <div class="swiffy-slider slider-nav-round slider-nav-dark pb-5 slider-indicators-dark slider-indicators-outside slider-indicators-round slider-indicators-highlight slider-nav-animation slider-nav-animation-scaleup slider-nav-autoplay slider-nav-autopause">
+        <ul class="slider-container">
+            <li>
+              <div class="slider-text d-flex align-items-center">
+                <p>Easily manage waste & material flow</p>
+                <img src="/images/leaf.svg" class="img-fluid" width="35px" style="margin-left:10px">
+              </div>
+              <hr>
+              <div>
+                <canvas id="myChart2" ></canvas>
+              </div>
+            </li>
+            <li>
+              <div  class="slider-text d-flex align-items-center">
+                <p>Identify the origin of the waste & material</p>
+                <img src="/images/leaf.svg" class="img-fluid" width="35px" style="margin-left:10px">
+              </div>
+              <hr>
+              <div>
+                <canvas id="myChart" ></canvas>
+              </div>
+            </li>
+            <li>
+              <div  class="slider-text d-flex align-items-center">
+                <p>Report with reliable, tailored, and centralized data</p>
+                <img src="/images/leaf.svg" class="img-fluid" width="35px" style="margin-left:10px">
+              </div>
+              <hr>
+              <div>
+                <canvas id="myChart3"></canvas>
+              </div>
+            </li>
+        </ul>
+    
+        <button type="button" class="slider-nav"></button>
+        <button type="button" class="slider-nav slider-nav-next"></button>
+    
+        <div class="slider-indicators">
+            <button class="active"></button>
+            <button></button>
+            <button></button>
+        </div>
+    </div>
+    <!-- Slider -->
+
+    <!-- Table -->
+    <table class="table table-striped mb-4 mt-5">
+      <thead class="table-head">
+        <tr>
+          <th style="width:40%">Name</th>
+          <th class="text-center" style="width:40%">Quantity (Kg)</th>
+          <th style="width:10%"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="(item, index) in data">
+          <td>{{item.name}}</td>
+          <td class="text-center">{{item.quantity}}</td>
+          <td></td>
+        </tr>
+      </tbody>
+
+      <tfoot v-if="data.length == 0 ">
+        <tr>
+          <td colspan="4" class="text-center p-5">
+            <br>
+            <img src="/images/sad.svg" class="img-fluid mx-auto" alt="" width="20px">
+            <small>No Data Found</small>
+            <br>
+          </td>
+        </tr>
+      </tfoot>
+
+    </table>
+    <!-- Table -->
+
+
+
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

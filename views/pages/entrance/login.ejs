@@ -1,0 +1,50 @@
+<div id="login" v-cloak>
+  <div class="row">
+    <div class="column imageSide">
+      <br>
+      <br>
+      <h1 class="loginFont text-center mt-4">Bid4Recycled</h1>
+      <p class="loginFont text-center">"One stop solution to manage your waste"</p>
+      <img class="loginImage" src="/images/garbagetruck.svg" >
+    </div>
+    <div class="column" style="padding-top: 10%;">
+      <div class="container-fluid pt-5 pb-5">
+        <h1 class="text-center loginFont">Sign in</h1>
+        <div style="max-width: 450px;" class="mx-auto">
+          <hr/>
+          <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+            <div class="form-group">
+              <p class="loginFont">Email</p>
+              <input type="email" class="form-control" placeholder="Email address" :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" autocomplete="email" focus-first>
+              <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
+            </div>
+            <div class="form-group">
+              <p class="loginFont">Password</p>
+              <input type="password" class="form-control" placeholder="Password" :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" autocomplete="current-password">
+              <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+            </div>
+            <div class="form-group form-check">
+              <input class="form-check-input" type="checkbox" id="remember" name="rememberMe" v-model="formData.rememberMe"/>
+              <label class="form-check-label loginFont" for="remember">Remember me</label>
+            </div>
+            <cloud-error v-if="cloudError==='badCombo'">The credentials you entered are not associated with an account. Please check your email and/or password and try again.</cloud-error>
+            <cloud-error v-else-if="cloudError"></cloud-error>
+            
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <ajax-button :syncing="syncing" class="submitButton btn-lg btn-block">Sign in</ajax-button>
+                </div>
+                <div class="col">
+                  <a class="submitButton btn btn-lg btn-block" href="/signup">Sign Up</a>
+                </div>
+              </div>
+            </div>
+          </ajax-form>
+          <p class="text-center loginFont"><a href="/password/forgot" class="links">Forgot your password?</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

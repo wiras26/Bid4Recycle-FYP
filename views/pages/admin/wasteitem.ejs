@@ -1,0 +1,74 @@
+<div id="wasteitem" v-cloak>
+
+  <div class="content-body">
+
+    <div class="page-breadcrump pt-2">
+      <div class="container container-lg">
+        <div class="row">
+          <div class="col-12">
+            <p class="breadcrump-text"><a class="breadcrump-link" href="/admin/waste/wastelist">Waste</a>
+              {{isEdit ? data.name : 'Add new item'}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-lg">
+      <h2 class="title">{{isEdit ? data.name : 'Add new item'}}</h2>
+
+      <div ref="message" class="alert alert-dismissible fade show mt-3 success-message" role="alert" v-if='saved'>
+        <strong>Saved</strong> Successfully.
+      </div>
+
+      <ajax-form :action="saveAction" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" :handle-parsing="handleParsingForm">
+
+        <div class="row pt-3 pb-3">
+          <div class="col-lg-3">
+            <div class="">
+              <label for="name">Name*</label>
+            </div>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="">
+              <input type="text" id="name" class="form-control" :class="[formErrors.name ? 'is-invalid' : '']"
+              v-model.trim="formData.name" placeholder="Item name">
+              <div class="invalid-feedback" v-if="formErrors.name">Please fill above to submit.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-3 pb-3">
+          <div class="col-lg-3">
+            <div class="">
+              <label for="name">Quantity (Kg)*</label>
+            </div>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="">
+              <input type="text" id="Quantity" class="form-control" :class="[formErrors.quantity ? 'is-invalid' : '']"
+              v-model.trim="formData.quantity" placeholder="Item Quantity">
+              <div class="invalid-feedback" v-if="formErrors.quantity">Please fill above to submit.</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check
+          your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+
+          <div class="text-right pt-4">
+            <a :href="listView"><input type="button" value="Cancel" class="btn btn-border mr-2 px-4"></a> 
+            <ajax-button class="btn btn-dark mr-2" :syncing="syncing" @click="savedAndClose()">Save and Close</ajax-button>
+            
+            <ajax-button class="btn btn-dark px-5" :syncing="syncing">Save</ajax-button>
+          </div>
+
+      </ajax-form>
+    </div>
+
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

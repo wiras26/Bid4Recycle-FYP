@@ -1,0 +1,213 @@
+<div id="product" v-cloak>
+
+  <div class="content-body">
+ 
+   <div class="page-breadcrump pt-2">
+     <div class="container container-lg">
+       <div class="row">
+         <div class="col-12">
+           <p class="breadcrump-text"><a class="breadcrump-link" href="/admin/product/productlist">Products</a>
+             {{isEdit ? data.name : 'Create new product'}}
+           </p>
+         </div>
+       </div>
+     </div>
+   </div>
+ 
+   <div class="container container-lg">
+     <h2 class="title">{{isEdit ? data.name : 'Create new product'}}</h2>
+ 
+     <div ref="message" class="alert alert-dismissible fade show mt-3 success-message" role="alert" v-if='saved'>
+       <strong>Saved</strong> Successfully.
+     </div>
+ 
+     <ajax-form :action="saveAction" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" :handle-parsing="handleParsingForm">
+ 
+       <div class="row pt-3 pb-3">
+         <div class="col-lg-3 ">
+           <div class="">
+             <label for="name">Name*</label>
+           </div>
+         </div>
+ 
+         <div class="col-lg-9">
+           <div class="">
+             <input type="text" id="name" class="form-control" :class="[formErrors.name ? 'is-invalid' : '']"
+               v-model.trim="formData.name" placeholder="Product's name">
+             <div class="invalid-feedback" v-if="formErrors.name">Please fill above to submit.</div>
+           </div>
+         </div>
+       </div>
+ 
+       <div class="row pt-3 pb-3">
+         <div class="col-lg-3 ">
+           <div class="">
+             <label for="name">Type*</label>
+           </div>
+         </div>
+ 
+         <div class="col-lg-3">
+
+          <select class="edit-field selectpicker form-control" id="type" name="type"
+            :class="[formErrors.type ? 'is-invalid' : '']" v-model.trim="formData.type"
+            placeholder="Select company">
+            <option class="d-none" value="">Select type</option>
+            <option value="Cardboard">Cardboard</option>
+            <option value="Metal">Metal</option>
+            <option value="Paper">Paper</option>
+            <option value="Plastic">Plastic</option>
+            <option value="Textiles">Textiles</option>
+            <option value="Wood">Wood</option>
+          </select>
+
+          <div class="invalid-feedback" v-if="formErrors.type">Please select type.</div>
+        </div>
+       </div>
+ 
+       <div class="row pt-3 pb-3">
+         <div class="col-lg-3 ">
+           <div class="">
+             <label for="name">Weight (Kg)*</label>
+           </div>
+         </div>
+ 
+         <div class="col-lg-9">
+           <div class="">
+             <input type="number" id="name" class="form-control" :class="[formErrors.weight ? 'is-invalid' : '']"
+               v-model.trim="formData.weight" placeholder="Product's weight">
+             <div class="invalid-feedback" v-if="formErrors.weight">Please fill above to submit.</div>
+           </div>
+         </div>
+       </div>
+ 
+       <div class="row pt-3 pb-3">
+         <div class="col-lg-3 ">
+           <div class="">
+             <label for="name">Location*</label>
+           </div>
+         </div>
+ 
+         <div class="col-lg-9">
+           <div class="">
+             <input type="text" id="name" class="form-control" :class="[formErrors.location ? 'is-invalid' : '']"
+               v-model.trim="formData.location" placeholder="Product's location">
+             <div class="invalid-feedback" v-if="formErrors.location">Please fill above to submit.</div>
+           </div>
+         </div>
+       </div>
+ 
+       <div class="form-group row pt-3 mb-0">
+         <div class="col-lg-3 ">
+           <label for="colFormLabel">Product image*</label>
+         </div>
+ 
+         <div class="col-lg-4">
+
+          <div class="file form-group">
+            <div class="input-group mb-2" v-if="!formData.productImage.url">
+
+              <div @click="uploadFile()" class="btn btn-dark upload-btn mb-2 ml-auto w-100 h-100">
+                <div class="d-flex justify-content-center align-items-center" v-if="!formData.image.uploadStarted">
+                  <img src="/images/upload-icon.svg" class="img-fluid" width="27px" />
+                  <label> Upload File</label>
+                </div>
+                <div v-if="formData.image.uploadStarted">
+                  <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                </div>
+              </div>
+
+
+              <input type="file" id="productImage" style="display: none;" :disabled="formData.image.uploadStarted"
+                accept="/*" class="custom-file-input" @change="changeFileInput($event.target.files)" />
+
+              <p class="text-danger" v-if="formData.image.uploadError"><small>An error occured while uploading your
+                  file. Please check your information and try again, or <a href="/contact">contact support</a> if the
+                  error persists.</small></p>
+
+            </div>
+
+            <div class="image-area d-flex align-items-center justify-content-between" v-if="formData.productImage.url">
+              <div class="d-flex align-items-center">
+                <img :src="formData.productImage.url" class="img-fluid" width="auto">
+                <img class="remove-image" @click="removeThumbnail()" src="/images/bin.svg" style="padding-left: 20px;">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+       </div>
+ 
+       <div class="row pt-3 pb-3">
+         <div class="col-lg-3 ">
+           <div class="">
+             <label for="name">Company name*</label>
+           </div>
+         </div>
+ 
+         <div class="col-lg-3">
+
+          <select class="edit-field selectpicker form-control" id="company_id" name="company_id"
+            :class="[formErrors.company_id ? 'is-invalid' : '']" v-model.trim="formData.company_id"
+            placeholder="Select company">
+            <option class="d-none" value="0">Select Company</option>
+            <option v-for="company in companyList" :value="company.id">{{company.name}}</option>
+          </select>
+
+          <div class="invalid-feedback" v-if="formErrors.company_id">Please select company.</div>
+        </div>
+       </div>
+ 
+       <div class="row pt-3 pb-3">
+         <div class="col-lg-3 ">
+           <div class="">
+             <label for="name">Minimum bid (LKR)*</label>
+           </div>
+         </div>
+ 
+         <div class="col-lg-9">
+           <div class="">
+             <input type="number" id="name" class="form-control" :class="[formErrors.minBid ? 'is-invalid' : '']"
+               v-model.trim="formData.minBid" placeholder="Product's minimum Bid">
+             <div class="invalid-feedback" v-if="formErrors.minBid">Please fill above to submit.</div>
+           </div>
+         </div>
+       </div>
+
+       <div class="row pt-3 pb-3">
+        <div class="col-lg-3 ">
+          <div class="">
+            <label for="name">Maximum bid (LKR)*</label>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div class="">
+            <input type="number" id="name" class="form-control" :class="[formErrors.maxBid ? 'is-invalid' : '']"
+              v-model.trim="formData.maxBid" placeholder="Product's maximum Bid">
+            <div class="invalid-feedback" v-if="formErrors.maxBid">Please fill above to submit.</div>
+          </div>
+        </div>
+      </div>
+ 
+ 
+       <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check
+         your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+ 
+       <div class="text-right pt-4">
+         <a :href="listView"><input type="button" value="Cancel" class="btn btn-border mr-2 px-4"></a> 
+         <ajax-button class="btn btn-dark mr-2" :syncing="syncing" @click="savedAndClose()">Save and Close</ajax-button>
+         
+         <ajax-button class="btn btn-dark px-5" :syncing="syncing">Save</ajax-button>
+       </div>
+ 
+ 
+ 
+     </ajax-form>
+ 
+   </div>
+  </div>
+ 
+ </div>
+ <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
+ 

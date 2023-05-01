@@ -1,0 +1,40 @@
+<div id="bids" v-cloak>
+  <div class="container container-lg">
+    <div class="row">
+      <h1>Bidding History</h1>
+    </div>
+
+    <table class="table table-striped mb-4">
+      <thead class="table-head">
+        <tr>
+          <th style="width:20%">Product ID</th>
+          <th style="width:20%">Product name</th>
+          <th style="width:20%">Bidded amount</th>
+          <th style="width:20%">User's name</th>
+          <th style="width:20%">User's email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item,index) in data">
+          <td>{{item.productId}}</td>
+          <td>{{item.productName}}</td>
+          <td>LKR {{item.bidAmount}}</td>
+          <td>{{item.userDetails.fullName}}</td>
+          <td>{{item.userDetails.emailAddress}}</td>
+        </tr>
+      </tbody>
+      <tfoot v-if="data.length == 0 ">
+        <tr>
+          <td colspan="4" class="text-center p-5">
+            <br>
+            <img src="/images/sad.svg" class="img-fluid mx-auto" alt="" width="20px">
+            <small>No Data Found</small>
+            <br>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

@@ -1,0 +1,230 @@
+<div id="home" v-cloak>
+
+    <div class="home-banner">
+        <div class="container">
+            <div class="text-center pt-4">
+                <h3>Hi {{data.userName}}! </h3>
+                <h3>THE GLOBAL RECYCLING MARKETPLACE</h3>
+                <p>
+                    Bid4Recycled has been specifically designed with years of industry knowledge to ensure an 
+                    easy to use arena that connects the industry's largest and smallest recycling 
+                    companies and traders on an equal platform.  
+                </p>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-4"  v-if="cardboardList.length >= 1">
+        <a href=""><h3 style="color: black;">Cardboard</h3></a>
+        <hr>
+        <div class="row">
+            <div class="col" v-for="(item,index) in cardboardList" v-if="index < 3">
+                <div class="card" style="width: 18rem;" v-if="item.type === 'Cardboard'">
+                    <img class="card-img-top" :src="item.productImage.url" alt="product_img" style="width: 100%;height:250px;">
+                    <div class="row pt-4 pl-4">  
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/location.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.location}}</label>
+                          </div>
+                        </div>
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/weight.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.weight}} Kg</label>
+                          </div>
+                        </div> 
+                      </div>
+                    <div class="card-body">
+                      <p class="card-title">{{item.name}}</p>
+                      <hr>
+                      <div class="d-flex justify-content-center align-items-center">
+                      <a class="btn btn-primary" :href="`/productitem/${item.id}`">View Product</a>
+                    </div>
+                      <hr>
+                      <a :href="`/productitem/${item.id}`"><p>#{{item.id}}</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-4"  v-if="metalList.length >= 1">
+        <a href=""><h3 style="color: black;">Metal</h3></a>
+        <hr>
+        <div class="row">
+            <div class="col" v-for="(item,index) in metalList" v-if="index < 3">
+                <div class="card" style="width: 18rem;" v-if="item.type === 'Metal'">
+                    <img class="card-img-top" :src="item.productImage.url" alt="product_img" style="width: 100%;height:250px;">
+                    <div class="row pt-4 pl-4">  
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/location.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.location}}</label>
+                          </div>
+                        </div>
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/weight.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.weight}} Kg</label>
+                          </div>
+                        </div> 
+                      </div>
+                    <div class="card-body">
+                      <p class="card-title">{{item.name}}</p>
+                      <hr>
+                      <div class="d-flex justify-content-center align-items-center">
+                      <a class="btn btn-primary" :href="`/productitem/${item.id}`">View Product</a>
+                    </div>
+                      <hr>
+                      <a :href="`/productitem/${item.id}`"><p>#{{item.id}}</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container pt-4"  v-if="paperList.length >= 1">
+        <a href=""><h3 style="color: black;">Paper</h3></a>
+        <hr>
+        <div class="row">
+            <div class="col" v-for="(item,index) in paperList" v-if="index < 3">
+                <div class="card" style="width: 18rem;" v-if="item.type === 'Paper'">
+                    <img class="card-img-top" :src="item.productImage.url" alt="product_img" style="width: 100%;height:250px;">
+                    <div class="row pt-4 pl-4">  
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/location.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.location}}</label>
+                          </div>
+                        </div>
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/weight.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.weight}} Kg</label>
+                          </div>
+                        </div> 
+                      </div>
+                    <div class="card-body">
+                      <p class="card-title">{{item.name}}</p>
+                      <hr>
+                      <div class="d-flex justify-content-center align-items-center">
+                      <a class="btn btn-primary" :href="`/productitem/${item.id}`">View Product</a>
+                    </div>
+                      <hr>
+                      <a :href="`/productitem/${item.id}`"><p>#{{item.id}}</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-4"  v-if="plasticList.length >= 1">
+        <a href=""><h3 style="color: black;">Plastic</h3></a>
+        <hr>
+        <div class="row">
+            <div class="col" v-for="(item,index) in plasticList" v-if="index < 3">
+                <div class="card" style="width: 18rem;" v-if="item.type === 'Plastic'">
+                    <img class="card-img-top" :src="item.productImage.url" alt="product_img" style="width: 100%;height:250px;">
+                    <div class="row pt-4 pl-4">  
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/location.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.location}}</label>
+                          </div>
+                        </div>
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/weight.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.weight}} Kg</label>
+                          </div>
+                        </div> 
+                      </div>
+                    <div class="card-body">
+                      <p class="card-title">{{item.name}}</p>
+                      <hr>
+                      <div class="d-flex justify-content-center align-items-center">
+                      <a class="btn btn-primary" :href="`/productitem/${item.id}`">View Product</a>
+                    </div>
+                      <hr>
+                      <a :href="`/productitem/${item.id}`"><p>#{{item.id}}</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-4"  v-if="textilesList.length >= 1">
+        <a href=""><h3 style="color: black;">Textiles</h3></a>
+        <hr>
+        <div class="row">
+            <div class="col" v-for="(item,index) in textilesList" v-if="index < 3">
+                <div class="card" style="width: 18rem;" v-if="item.type === 'Textiles'">
+                    <img class="card-img-top" :src="item.productImage.url" alt="product_img" style="width: 100%;height:250px;">
+                    <div class="row pt-4 pl-4">  
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/location.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.location}}</label>
+                          </div>
+                        </div>
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/weight.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.weight}} Kg</label>
+                          </div>
+                        </div> 
+                      </div>
+                    <div class="card-body">
+                      <p class="card-title">{{item.name}}</p>
+                      <hr>
+                      <div class="d-flex justify-content-center align-items-center">
+                      <a class="btn btn-primary" :href="`/productitem/${item.id}`">View Product</a>
+                    </div>
+                      <hr>
+                      <a :href="`/productitem/${item.id}`"><p>#{{item.id}}</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-4" v-if="woodList.length >= 1">
+        <a href=""><h3 style="color: black;">Wood</h3></a>
+        <hr>
+        <div class="row">
+            <div class="col" v-for="(item,index) in woodList" v-if="index < 3">
+                <div class="card" style="width: 18rem;" v-if="item.type === 'Wood'">
+                    <img class="card-img-top" :src="item.productImage.url" alt="product_img" style="width: 100%;height:250px;">
+                    <div class="row pt-4 pl-4">  
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/location.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.location}}</label>
+                          </div>
+                        </div>
+                        <div class="text-center col-6 product-info">
+                          <div class="d-flex justify-content-center align-items-center">
+                            <img src="/images/weight.svg" class="img-fluid" width="15px" style="margin-right:10px">
+                            <label class="mb-0">{{item.weight}} Kg</label>
+                          </div>
+                        </div> 
+                      </div>
+                    <div class="card-body">
+                      <p class="card-title">{{item.name}}</p>
+                      <hr>
+                      <div class="d-flex justify-content-center align-items-center">
+                      <a class="btn btn-primary" :href="`/productitem/${item.id}`">View Product</a>
+                    </div>
+                      <hr>
+                      <a :href="`/productitem/${item.id}`"><p>#{{item.id}}</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

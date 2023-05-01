@@ -1,0 +1,152 @@
+<div id="company" v-cloak>
+
+  <div class="content-body">
+
+    <div class="page-breadcrump pt-2">
+      <div class="container container-lg">
+        <div class="row">
+          <div class="col-12">
+            <p class="breadcrump-text"><a class="breadcrump-link" href="/admin/company/companylist">Companies</a>
+              {{isEdit ? data.name : 'Add new company'}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-lg">
+      <h2 class="title">{{isEdit ? data.name : 'Add new company'}}</h2>
+
+      <div ref="message" class="alert alert-dismissible fade show mt-3 success-message" role="alert" v-if='saved'>
+        <strong>Saved</strong> Successfully.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="successMsgClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <ajax-form :action="saveAction" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" :handle-parsing="handleParsingForm">
+        
+        <div class="form-group row pt-3 mb-0">
+          <div class="col-lg-3 ">
+            <label for="colFormLabel">Company logo*</label>
+          </div>
+  
+          <div class="col-lg-4">
+ 
+           <div class="file form-group">
+             <div class="input-group mb-2" v-if="!formData.companyLogo.url">
+ 
+               <div @click="uploadFile()" class="btn btn-dark upload-btn mb-2 ml-auto w-100 h-100">
+                 <div class="d-flex justify-content-center align-items-center" v-if="!formData.image.uploadStarted">
+                   <img src="/images/upload-icon.svg" class="img-fluid" width="27px" />
+                   <label> Upload File</label>
+                 </div>
+                 <div v-if="formData.image.uploadStarted">
+                   <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                 </div>
+               </div>
+ 
+ 
+               <input type="file" id="companyLogo" style="display: none;" :disabled="formData.image.uploadStarted"
+                 accept="/*" class="custom-file-input" @change="changeFileInput($event.target.files)" />
+ 
+               <p class="text-danger" v-if="formData.image.uploadError"><small>An error occured while uploading your
+                   file. Please check your information and try again, or <a href="/contact">contact support</a> if the
+                   error persists.</small></p>
+ 
+             </div>
+ 
+             <div class="d-flex align-items-center justify-content-between" v-if="formData.companyLogo.url">
+               <div class="d-flex align-items-center">
+                 <img :src="formData.companyLogo.url" class="img-fluid" width="auto">
+                 <img class="remove-image" @click="removeThumbnail()" src="/images/bin.svg" style="padding-left: 20px;">
+               </div>
+             </div>
+ 
+           </div>
+ 
+         </div>
+        </div>
+        
+        
+        
+        <div class="row pt-3 pb-3">
+          <div class="col-lg-3 ">
+            <div class="">
+              <label for="name">Name*</label>
+            </div>
+          </div>
+  
+          <div class="col-lg-9">
+            <div class="">
+              <input type="text" id="name" class="form-control" :class="[formErrors.name ? 'is-invalid' : '']"
+                v-model.trim="formData.name" placeholder="Company name">
+              <div class="invalid-feedback" v-if="formErrors.name">Please fill above to submit.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-3 pb-3">
+          <div class="col-lg-3 ">
+            <div class="">
+              <label for="name">Description*</label>
+            </div>
+          </div>
+  
+          <div class="col-lg-9">
+            <div class="">
+              <input type="text" id="name" class="form-control" :class="[formErrors.description ? 'is-invalid' : '']"
+                v-model.trim="formData.description" placeholder="Company description">
+              <div class="invalid-feedback" v-if="formErrors.description">Please fill above to submit.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-3 pb-3">
+          <div class="col-lg-3 ">
+            <div class="">
+              <label for="name">Number*</label>
+            </div>
+          </div>
+  
+          <div class="col-lg-9">
+            <div class="">
+              <input type="number" id="name" class="form-control" :class="[formErrors.number ? 'is-invalid' : '']"
+                v-model.trim="formData.number" placeholder="Company number">
+              <div class="invalid-feedback" v-if="formErrors.number">Please fill above to submit.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-3 pb-3">
+          <div class="col-lg-3 ">
+            <div class="">
+              <label for="name">Address (Optional)</label>
+            </div>
+          </div>
+  
+          <div class="col-lg-9">
+            <div class="">
+              <input type="text" id="name" class="form-control" :class="[formErrors.address ? 'is-invalid' : '']"
+                v-model.trim="formData.address" placeholder="Company address">
+              <div class="invalid-feedback" v-if="formErrors.address">Please fill above to submit.</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check
+          your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+  
+        <div class="text-right pt-4">
+          <a :href="listView"><input type="button" value="Cancel" class="btn btn-border mr-2 px-4"></a> 
+          <ajax-button class="btn btn-dark mr-2" :syncing="syncing" @click="savedAndClose()">Save and Close</ajax-button>
+          
+          <ajax-button class="btn btn-dark px-5" :syncing="syncing">Save</ajax-button>
+        </div>
+
+      </ajax-form>
+    </div>
+  </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
